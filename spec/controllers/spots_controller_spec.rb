@@ -9,4 +9,20 @@ describe SpotsController do
       expect(assigns(:spots)).to eq([spot, spot2])
     end
   end
+
+  describe "GET show" do
+    it "sets the @spot variable" do
+      spot = Fabricate(:spot)
+      get :show, id: spot.id
+      expect(assigns(:spot)).to eq(spot)
+    end
+  end
+
+  describe "GET search" do
+    it "assigns @results" do
+      spot = Fabricate(:spot)
+      get :search, search_term: "#{spot.name}"
+      expect(assigns(:results)).to eq([spot])
+    end
+  end
 end
