@@ -24,4 +24,11 @@ describe Spot do
       expect(result).to eq([])
     end
   end
+
+  describe "reverse geoclation" do
+    it "returns the saves correct address when latitude and longitude are saved" do
+      spot = Fabricate(:spot, latitude: -41.313107, longitude: 174.828204)
+      expect(spot.address).to eq("215 Marine Parade, Seatoun, Wellington 6022, New Zealand")
+    end
+  end
 end

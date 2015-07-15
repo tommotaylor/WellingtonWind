@@ -19,6 +19,7 @@ gem 'pg'
 gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
+gem 'geocoder'
 
 group :development do
   gem 'thin'
