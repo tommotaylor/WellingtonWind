@@ -1,3 +1,3 @@
 class Category < ActiveRecord::Base
-  has_many :spots
+  has_and_belongs_to_many :spots
 end
