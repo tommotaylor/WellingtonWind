@@ -19,5 +19,8 @@ module Wellingtonwind
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    ForecastIO.configure do |configuration|
+      configuration.api_key = '709a6c5b8ebe5c5467512ded06436d39'
+    end
   end
 end

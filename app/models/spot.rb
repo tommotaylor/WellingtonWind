@@ -8,4 +8,18 @@ class Spot < ActiveRecord::Base
     return [] if search_term.blank?
     Spot.where("name LIKE ?", "%#{search_term}%")
   end
+
+  def forecast
+    ForecastIO.forecast(latitude, longitude)
+  end
+
+  def current_wind_speed
+    current_weather = self.forecast["currently"]
+    current_weather["windSpeed"]*0.868976
+  end
+
+  def current_wind_direction
+    current_weather = self.forecast["currently"]
+    Geocoder::Calculations.compass_point(current_weather["windBearing"])
+  end
 end

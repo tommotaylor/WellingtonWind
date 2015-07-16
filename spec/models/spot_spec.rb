@@ -25,10 +25,26 @@ describe Spot do
     end
   end
 
-  describe "reverse geoclation" do
+  describe "reverse geolocation" do
     it "returns the saves correct address when latitude and longitude are saved" do
       spot = Fabricate(:spot, latitude: -41.313107, longitude: 174.828204)
-      expect(spot.address).to eq("215 Marine Parade, Seatoun, Wellington 6022, New Zealand")
+      expect(spot.address).to include("215 Marine Parade")
+    end
+  end
+
+  describe "current_wind_speed" do
+    it "returns a float" do
+      spot = Fabricate(:spot, name: "The Ditch", latitude: -41.313107, longitude: 174.828204)
+      result = spot.current_wind_speed
+      expect(result).to be_a(Float)
+    end
+  end
+
+  describe "current_wind_direction" do
+    it "returns a string" do
+      spot = Fabricate(:spot, name: "The Ditch", latitude: -41.313107, longitude: 174.828204)
+      result = spot.current_wind_direction
+      expect(result).to be_a(String)
     end
   end
 end

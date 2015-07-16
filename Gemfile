@@ -20,6 +20,7 @@ gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
 gem 'geocoder'
+gem 'forecast_io'
 
 group :development do
   gem 'thin'
