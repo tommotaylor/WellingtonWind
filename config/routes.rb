@@ -13,4 +13,6 @@ Rails.application.routes.draw do
  post 'sign_in', to: 'sessions#create'
  get 'sign_out', to: 'sessions#destroy'
 
+ get 'favourites', to: 'favourites#index'
+
 end
