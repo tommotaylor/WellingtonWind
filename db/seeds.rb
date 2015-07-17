@@ -1,3 +1,8 @@
+User.create([
+{ name: "Tom Taylor",
+  email: "tom@tom.com",
+  password: "password" }])
+
 Category.create!([
 { name: "Windsurfing" },
 { name: "Kitesurfing" },
@@ -29,4 +34,13 @@ Spot.create!([
   longitude: 174.835677,
   :categories => Category.where(name: ['Windsurfing', 'Kitesurfing'])
   }])
+
+Favourite.create!([
+{ user_id: 1,
+  spot_id: 1,
+  list_order: 1
+  },
+{ user_id: 1,
+  spot_id: 2,
+  list_order: 2 }])
 
