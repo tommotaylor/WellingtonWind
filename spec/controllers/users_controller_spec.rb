@@ -20,13 +20,24 @@ describe UsersController do
         post :create, user: Fabricate.attributes_for(:user)
         expect(User.count).to eq(1)
       end
-      it "sets the session"
-      it "redirects to the home page"
+      it "redirects to the home page" do
+        post :create, user: Fabricate.attributes_for(:user)
+        expect(response).to redirect_to home_path
+      end
     end
     context "with invalid inputs" do
-      it "doesn't save the user"
-      it "renders the register page"
-      it "flashes an error"
+      it "doesn't save the user" do
+        post :create, user: Fabricate.attributes_for(:user, email: "")
+        expect(User.count).to eq(0)
+      end
+      it "renders the register page" do
+        post :create, user: Fabricate.attributes_for(:user, email: "")
+        expect(response).to render_template :new
+      end
+      it "flashes an error" do
+        post :create, user: Fabricate.attributes_for(:user, email: "")
+        expect(flash[:error]).to be_present
+      end
     end
   end
 end
