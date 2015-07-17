@@ -15,4 +15,6 @@ Rails.application.routes.draw do
 
  get 'favourites', to: 'favourites#index'
 
+ resources :favourites, only: [:index, :create, :delete]
+
 end

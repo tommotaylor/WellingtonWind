@@ -32,7 +32,7 @@ describe Spot do
     end
   end
 
-  describe "current_wind_speed" do
+  describe "#current_wind_speed" do
     it "returns a float" do
       spot = Fabricate(:spot, name: "The Ditch", latitude: -41.313107, longitude: 174.828204)
       result = spot.current_wind_speed
@@ -40,11 +40,17 @@ describe Spot do
     end
   end
 
-  describe "current_wind_direction" do
+  describe "#current_wind_direction" do
     it "returns a string" do
       spot = Fabricate(:spot, name: "The Ditch", latitude: -41.313107, longitude: 174.828204)
       result = spot.current_wind_direction
       expect(result).to be_a(String)
     end
+  end
+
+  describe "#wind_trend" do
+    it "returns 'increasing' if increasing"
+    it "returns 'decreasing' if decreasing"
+    it "returns 'no change' if no change"
   end
 end
