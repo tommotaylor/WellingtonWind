@@ -15,7 +15,7 @@ class Spot < ActiveRecord::Base
 
   def current_wind_speed
     current_weather = self.forecast["currently"]
-    current_weather["windSpeed"]*0.868976
+    (current_weather["windSpeed"]*0.868976).round(0)
   end
 
   def current_wind_direction

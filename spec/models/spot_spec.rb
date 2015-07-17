@@ -36,7 +36,7 @@ describe Spot do
     it "returns a float" do
       spot = Fabricate(:spot, name: "The Ditch", latitude: -41.313107, longitude: 174.828204)
       result = spot.current_wind_speed
-      expect(result).to be_a(Float)
+      expect(result).to be_a(Integer)
     end
   end
 
