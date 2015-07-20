@@ -49,7 +49,7 @@ describe FavouritesController do
       it "adds the favourite as the last item in the list" do
         spot1 = Fabricate(:spot)
         spot2 = Fabricate(:spot)
-        favourite1 = Fabricate(:favourite, spot_id: spot1.id, user_id: session[:user_id])
+        favourite1 = Fabricate(:favourite, spot_id: spot1.id, user_id: session[:user_id], list_order: 1)
         post :create, spot_id: spot2.id, user_id: session[:user_id]
         expect(Favourite.second.list_order).to eq(2)
       end
