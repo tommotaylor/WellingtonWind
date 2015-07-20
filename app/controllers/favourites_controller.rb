@@ -7,7 +7,8 @@ class FavouritesController < ApplicationController
   end
 
   def create
-    favourite = Favourite.create(user_id: current_user.id, spot_id: params[:spot_id], list_order: bottom_of_queue)
+    spot = Spot.find_by(params[:spot_id])
+    favourite = Favourite.create(user_id: current_user.id, spot_id: spot.id, list_order: bottom_of_queue) unless already_in_queue?(spot)
     redirect_to favourites_path
   end
 
@@ -15,6 +16,10 @@ private
 
   def bottom_of_queue
     current_user.favourites.count + 1
+  end
+
+  def already_in_queue?(spot)
+    current_user.favourites.map(&:spot).include?(spot)
   end
 
 end

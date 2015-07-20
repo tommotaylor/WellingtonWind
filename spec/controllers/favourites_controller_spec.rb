@@ -32,7 +32,8 @@ describe FavouritesController do
         set_user
       end
       it "redirects to favourites path" do
-        post :create
+        spot = Fabricate(:spot)
+        post :create, spot_id: spot.id 
         expect(response).to redirect_to favourites_path
       end
       it "creates the favourite associated with the current user" do
@@ -48,11 +49,16 @@ describe FavouritesController do
       it "adds the favourite as the last item in the list" do
         spot1 = Fabricate(:spot)
         spot2 = Fabricate(:spot)
-        Fabricate(:favourite, spot_id: spot1.id, user_id: session[:user_id])
-        post :create, spot_id: spot2.id
+        favourite1 = Fabricate(:favourite, spot_id: spot1.id, user_id: session[:user_id])
+        post :create, spot_id: spot2.id, user_id: session[:user_id]
         expect(Favourite.second.list_order).to eq(2)
       end
-      it "doesn't add the favourite if it is already a favourite"
+      it "doesn't add the favourite if it is already a favourite" do
+        spot1 = Fabricate(:spot)
+        Fabricate(:favourite, spot_id: spot1.id, user_id: session[:user_id])
+        post :create, spot_id: spot1.id
+        expect(Favourite.count).to eq(1)
+      end
     context "not signed in" do
       it "redirects to the sign in page"
     end
