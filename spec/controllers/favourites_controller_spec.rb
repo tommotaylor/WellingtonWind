@@ -40,8 +40,18 @@ describe FavouritesController do
         post :create, spot_id: spot.id
         expect(Favourite.first.user_id).to eq(session[:user_id])
       end
-      it "creates the favourite associated with the correct spot"
-      it "adds the favourite as the last item in the list"
+      it "creates the favourite associated with the correct spot" do
+        spot = Fabricate(:spot)
+        post :create, spot_id: spot.id
+        expect(Favourite.first.spot_id).to eq(spot.id)
+      end
+      it "adds the favourite as the last item in the list" do
+        spot1 = Fabricate(:spot)
+        spot2 = Fabricate(:spot)
+        Fabricate(:favourite, spot_id: spot1.id, user_id: session[:user_id])
+        post :create, spot_id: spot2.id
+        expect(Favourite.second.list_order).to eq(2)
+      end
       it "doesn't add the favourite if it is already a favourite"
     context "not signed in" do
       it "redirects to the sign in page"
