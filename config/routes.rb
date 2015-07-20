@@ -14,6 +14,7 @@ Rails.application.routes.draw do
  get 'sign_out', to: 'sessions#destroy'
 
  get 'favourites', to: 'favourites#index'
+ post 'update_favourites', to: 'favourites#update_favourites'
 
  resources :favourites, only: [:index, :create, :delete]
 

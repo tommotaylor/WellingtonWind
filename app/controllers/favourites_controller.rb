@@ -12,6 +12,9 @@ class FavouritesController < ApplicationController
     redirect_to favourites_path
   end
 
+  def update_favourites
+  end
+
 private
 
   def bottom_of_queue
