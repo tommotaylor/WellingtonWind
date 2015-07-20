@@ -27,7 +27,7 @@ describe FavouritesController do
   end
 
   describe "POST create" do
-    context "signed in"
+    context "signed in" do
       before do
         set_user
       end
@@ -59,8 +59,13 @@ describe FavouritesController do
         post :create, spot_id: spot1.id
         expect(Favourite.count).to eq(1)
       end
+    end
     context "not signed in" do
-      it "redirects to the sign in page"
+      it "redirects to the sign in page" do
+        spot = Fabricate(:spot)
+        post :create, spot_id: spot.id 
+        expect(response).to redirect_to sign_in_path
+      end
     end
   end
 
