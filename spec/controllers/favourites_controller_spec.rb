@@ -81,14 +81,59 @@ describe FavouritesController do
           favourite1 = Fabricate(:favourite, spot_id: spot1.id, user_id: session[:user_id], list_order: 1)
           favourite2 = Fabricate(:favourite, spot_id: spot2.id, user_id: session[:user_id], list_order: 2)
           post :update_favourites, favourites: [{favourite_id: favourite1.id, list_order: 2}, {favourite_id: favourite2.id, list_order: 1}]
-          expect(favourite2.list_order).to eq(1)
+          expect(favourite2.reload.list_order).to eq(1)
         end
-        it "normalises the queue"
+        it "normalises the queue" do
+          spot1 = Fabricate(:spot)
+          spot2 = Fabricate(:spot)
+          favourite1 = Fabricate(:favourite, spot_id: spot1.id, user_id: session[:user_id], list_order: 1)
+          favourite2 = Fabricate(:favourite, spot_id: spot2.id, user_id: session[:user_id], list_order: 2)
+          post :update_favourites, favourites: [{favourite_id: favourite1.id, list_order: 6}, {favourite_id: favourite2.id, list_order: 1}]
+          expect(favourite1.reload.list_order).to eq(2)
+        end
+        it "doesn't update the queue if the favourite isn't in the current users queue" do
+          user2 = Fabricate(:user)
+          spot1 = Fabricate(:spot)
+          spot2 = Fabricate(:spot)
+          favourite1 = Fabricate(:favourite, spot_id: spot1.id, user_id: session[:user_id], list_order: 1)
+          favourite2 = Fabricate(:favourite, spot_id: spot2.id, user_id: user2.id, list_order: 2)
+          post :update_favourites, favourites: [{favourite_id: favourite1.id, list_order: 2}, {favourite_id: favourite2.id, list_order: 1}]
+          expect(favourite2.reload.list_order).to eq(2)
+        end
       end
       context "with invalid inputs" do
-        it "doesnt update if input is a float"
-        it "doesn't update if input is a string"
-        it "flashes and error message"
+        it "doesnt update if input is a float" do
+          spot1 = Fabricate(:spot)
+          spot2 = Fabricate(:spot)
+          favourite1 = Fabricate(:favourite, spot_id: spot1.id, user_id: session[:user_id], list_order: 1)
+          favourite2 = Fabricate(:favourite, spot_id: spot2.id, user_id: session[:user_id], list_order: 2)
+          post :update_favourites, favourites: [{favourite_id: favourite1.id, list_order: 6.56 }, {favourite_id: favourite2.id, list_order: 2}]
+          expect(favourite1.reload.list_order).to eq(1)
+        end
+        it "doesn't update if input is a string" do
+          spot1 = Fabricate(:spot)
+          spot2 = Fabricate(:spot)
+          favourite1 = Fabricate(:favourite, spot_id: spot1.id, user_id: session[:user_id], list_order: 1)
+          favourite2 = Fabricate(:favourite, spot_id: spot2.id, user_id: session[:user_id], list_order: 2)
+          post :update_favourites, favourites: [{favourite_id: favourite1.id, list_order: "foobar"}, {favourite_id: favourite2.id, list_order: 2}]
+          expect(favourite1.reload.list_order).to eq(1)
+        end
+        it "doesn't save the first favourite if there is an error with second or subsequent favourites" do
+          spot1 = Fabricate(:spot)
+          spot2 = Fabricate(:spot)
+          favourite1 = Fabricate(:favourite, spot_id: spot1.id, user_id: session[:user_id], list_order: 1)
+          favourite2 = Fabricate(:favourite, spot_id: spot2.id, user_id: session[:user_id], list_order: 2)
+          post :update_favourites, favourites: [{favourite_id: favourite1.id, list_order: 3}, {favourite_id: favourite2.id, list_order: "foobar"}]
+          expect(favourite1.reload.list_order).to eq(1)
+        end
+        it "flashes an error message" do
+          spot1 = Fabricate(:spot)
+          spot2 = Fabricate(:spot)
+          favourite1 = Fabricate(:favourite, spot_id: spot1.id, user_id: session[:user_id], list_order: 1)
+          favourite2 = Fabricate(:favourite, spot_id: spot2.id, user_id: session[:user_id], list_order: 2)
+          post :update_favourites, favourites: [{favourite_id: favourite1.id, list_order: "foobar"}, {favourite_id: favourite2.id, list_order: 2}]
+          expect(flash[:error]).to be_present
+        end
       end
     end
     context "not signed in" do
@@ -115,7 +160,12 @@ describe FavouritesController do
     before do
         set_user
       end
-    it "deletes the favourite" 
+    it "deletes the favourite" do
+      spot = Fabricate(:spot)
+      favourite = Fabricate(:favourite, spot_id: spot.id, user_id: session[:user_id], list_order: 1)
+      delete :destroy, id: favourite.id
+      expect(Favourite.count).to eq(0)
+    end
     it "doesn't delete the favourite if it isn't in the users queue"
     it "redirects to the favourites page"
   end

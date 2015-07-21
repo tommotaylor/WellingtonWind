@@ -16,6 +16,6 @@ Rails.application.routes.draw do
  get 'favourites', to: 'favourites#index'
  post 'update_favourites', to: 'favourites#update_favourites'
 
- resources :favourites, only: [:index, :create, :delete]
+ resources :favourites, only: [:create, :destroy]
 
 end
