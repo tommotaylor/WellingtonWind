@@ -13,6 +13,13 @@ class FavouritesController < ApplicationController
   end
 
   def update_favourites
+    favourite_data = params[:favourites]
+    favourite_data.each do |data|
+      
+    end
+    # get the data
+    #iterate through the data
+    # get each favourite_id and list_order and then set it.
   end
 
 private

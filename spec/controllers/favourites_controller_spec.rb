@@ -92,13 +92,30 @@ describe FavouritesController do
       end
     end
     context "not signed in" do
-      it "does not upate the queue"
-      it "redirects to login page"
+      it "does not upate the queue" do
+        spot1 = Fabricate(:spot)
+        spot2 = Fabricate(:spot)
+        favourite1 = Fabricate(:favourite, spot_id: spot1.id, user_id: 1, list_order: 1)
+        favourite2 = Fabricate(:favourite, spot_id: spot2.id, user_id: 1, list_order: 2)
+        post :update_favourites, favourites: [{favourite_id: favourite1.id, list_order: 2}, {favourite_id: favourite2.id, list_order: 1}]
+        expect(favourite1.list_order).to eq(1)
+      end
+      it "redirects to login page" do
+        spot1 = Fabricate(:spot)
+        spot2 = Fabricate(:spot)
+        favourite1 = Fabricate(:favourite, spot_id: spot1.id, user_id: 1, list_order: 1)
+        favourite2 = Fabricate(:favourite, spot_id: spot2.id, user_id: 1, list_order: 2)
+        post :update_favourites, favourites: [{favourite_id: favourite1.id, list_order: 2}, {favourite_id: favourite2.id, list_order: 1}]
+        expect(response).to redirect_to sign_in_path
+      end
     end
   end
 
   describe "DELETE destroy" do
-    it "deletes the favourite"
+    before do
+        set_user
+      end
+    it "deletes the favourite" 
     it "doesn't delete the favourite if it isn't in the users queue"
     it "redirects to the favourites page"
   end
