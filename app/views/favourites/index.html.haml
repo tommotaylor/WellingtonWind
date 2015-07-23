@@ -1,8 +1,29 @@
-- if current_user.favourites.any?
-  - @favourites.each do |favourite|
-    %div
-      = favourite.spot.name
-      = favourite.spot.current_wind_speed.to_s + " knots"
-      = favourite.spot.current_wind_direction
-- else
-  %div You don't have any favourites yet
+%section.my_queue.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %article
+        %header
+          %h2 My Favourites
+        = form_tag update_favourites_path, method: :post do
+          %table.table
+            %thead
+              %tr
+                %th(width="10%") List Order
+                %th(width="30%") Spot Name
+                %th(width="15%") Category
+                %th(width="15%") Remove
+            %tbody
+              - @favourites.each do |favourite|
+                %tr
+                  = hidden_field_tag "favourites[][id]", favourite.id
+                  %td
+                    = text_field_tag "favourites[][list_order]", favourite.list_order, class: "form-control", data: { spot_id: favourite.spot.id }, id: "spot_id_#{favourite.spot.id}"
+                  %td
+                    = link_to favourite.spot.name, spot_path(favourite.spot)
+                  %td
+                    = link_to "Windsurfing", ""
+                  %td
+                    = link_to favourite_path(favourite), method: :delete do
+                      %i.glyphicon.glyphicon-remove
+
+          = submit_tag "Update Favourites", class: "btn btn-default"

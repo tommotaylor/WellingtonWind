@@ -10,6 +10,10 @@ class SpotsController < ApplicationController
 
   def show
     @spot = Spot.find(params[:id])
+    @hash = Gmaps4rails.build_markers(@spot) do |spot, marker|
+      marker.lat spot.latitude
+      marker.lng spot.longitude
+    end
   end
 
   def search

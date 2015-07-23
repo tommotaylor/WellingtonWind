@@ -1,4 +1,8 @@
-- @results.each do |result|
-  = result.name
-  = result.current_wind_speed.to_s + " knots"
-  = result.current_wind_direction
+%h1 Search results:
+
+- @results.each do |spot|
+  %div
+    = link_to spot.name, spot_path(spot)
+    = spot.current_wind_speed.to_s + " knots"
+    = spot.current_wind_direction
+    = link_to "+ My Favourites", favourites_path(spot_id: spot.id), method: :post, class: 'btn btn-default'
