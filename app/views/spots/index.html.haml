@@ -1,1 +1,5 @@
-spots index
+- @spots.each do |spot|
+  %div
+    = spot.name
+    = spot.current_wind_speed.to_s + " knots"
+    = spot.current_wind_direction

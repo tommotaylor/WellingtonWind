@@ -1,0 +1,8 @@
+- if current_user.favourites.any?
+  - @favourites.each do |favourite|
+    %div
+      = favourite.spot.name
+      = favourite.spot.current_wind_speed.to_s + " knots"
+      = favourite.spot.current_wind_direction
+- else
+  %div You don't have any favourites yet

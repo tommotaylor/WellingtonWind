@@ -1,1 +1,4 @@
-= @results
+- @results.each do |result|
+  = result.name
+  = result.current_wind_speed.to_s + " knots"
+  = result.current_wind_direction
