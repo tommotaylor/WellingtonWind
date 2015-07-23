@@ -166,7 +166,18 @@ describe FavouritesController do
       delete :destroy, id: favourite.id
       expect(Favourite.count).to eq(0)
     end
-    it "doesn't delete the favourite if it isn't in the users queue"
-    it "redirects to the favourites page"
+    it "doesn't delete the favourite if it isn't in the users queue" do
+      user2 = Fabricate(:user)
+      spot = Fabricate(:spot)
+      favourite = Fabricate(:favourite, spot_id: spot.id, user_id: user2.id, list_order: 1)
+      delete :destroy, id: favourite.id
+      expect(Favourite.count).to eq(1)
+    end
+    it "redirects to the favourites page" do
+      spot = Fabricate(:spot)
+      favourite = Fabricate(:favourite, spot_id: spot.id, user_id: session[:user_id], list_order: 1)
+      delete :destroy, id: favourite.id
+      expect(response).to redirect_to favourites_path
+    end
   end
 end
