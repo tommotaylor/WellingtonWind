@@ -1,18 +1,8 @@
-%section#top-header.row
-  %h1.col-md-2
-    = link_to "WellingtonWind"
-    %ul.col-md-4.clearfix
-      %li= link_to "Spots"
-      %li= link_to "My Favourites"
-    #user_links.pull-right
-      %ul
-        %li.dropdown
-          %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
-            Welcome, Person's Name
-            %b.caret
-            %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
-              %li
-                =link_to 'Account', '#'
-                =link_to 'Plan and Billing', '#'
-                =link_to 'Sign Out'
-      
+%div{:class => ["navbar", "navbar-inverse"]}
+  .navbar-inner
+    .container
+      %a(class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse")
+        %span(class="icon-bar")
+        %span(class="icon-bar")
+        %span(class="icon-bar")
+      %a(class="brand" href="#")WellingtonWind
