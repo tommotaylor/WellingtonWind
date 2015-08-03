@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150717165128) do
+ActiveRecord::Schema.define(version: 20150728153545) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -42,6 +42,9 @@ ActiveRecord::Schema.define(version: 20150717165128) do
     t.float    "longitude"
     t.string   "address"
     t.string   "stored_forecast"
+    t.integer  "current_wind_direction"
+    t.integer  "current_wind_speed"
+    t.string   "trend"
   end
 
   create_table "users", force: true do |t|

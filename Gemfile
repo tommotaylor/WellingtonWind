@@ -23,6 +23,8 @@ gem 'bootstrap_form'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 gem 'gmaps4rails'
+gem 'api_cache'
+gem 'moneta'
 
 
 group :development do
