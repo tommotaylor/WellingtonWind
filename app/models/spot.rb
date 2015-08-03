@@ -11,17 +11,16 @@ class Spot < ActiveRecord::Base
   end
 
   def forecast
-    @forecast ||= ForecastIO.forecast("#{latitude}","#{longitude}")
+    ForecastIO.forecast(latitude, longitude)
   end
 
-  def save_current_wind_speed
-    current_weather = forecast["currently"]
-    self.current_wind_speed = (current_weather["windSpeed"]*0.868976).round(0)
+  def current_wind_speed
+    current_weather = self.forecast["currently"]
+    (current_weather["windSpeed"]*0.868976).round(0)
   end
 
-  def save_current_wind_direction
-    current_weather = @forecast["currently"]
-    self.current_wind_direction = Geocoder::Calculations.compass_point(current_weather["windBearing"])
+  def current_wind_direction
+    current_weather = self.forecast["currently"]
+    Geocoder::Calculations.compass_point(current_weather["windBearing"])
   end
-
 end

@@ -9,3 +9,7 @@ development:
   <<: *default
   database: wellingtonwind_development
   host: localhost
+
+test:
+  <<: *default
+  database: wellingtonwind_test
