@@ -48,8 +48,8 @@ private
   def update_list
     ActiveRecord::Base.transaction do
       params[:favourites].each do |data|
-        favourite = Favourite.find_by(data[:id])
-        favourite.update_attributes!(list_order: data[:list_order]) if favourite.user_id == current_user.id
+        favourite = Favourite.find(data["id"])
+        favourite.update_attributes!(list_order: data["list_order"]) if favourite.user_id == current_user.id
       end
     end
   end

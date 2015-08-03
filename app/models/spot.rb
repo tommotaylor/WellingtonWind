@@ -11,7 +11,7 @@ class Spot < ActiveRecord::Base
   end
 
   def forecast
-    ForecastIO.forecast(latitude, longitude)
+    @forecast ||= ForecastIO.forecast(latitude, longitude)
   end
 
   def current_wind_speed

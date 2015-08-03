@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
  get 'home', to: 'spots#index'
+ root 'spots#index'
 
  resources :spots, only: [:index, :show]
 
