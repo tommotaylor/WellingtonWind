@@ -47,10 +47,4 @@ describe Spot do
       expect(result).to be_a(String)
     end
   end
-
-  describe "#wind_trend" do
-    it "returns 'increasing' if increasing"
-    it "returns 'decreasing' if decreasing"
-    it "returns 'no change' if no change"
-  end
 end

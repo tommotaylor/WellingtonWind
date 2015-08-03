@@ -6,7 +6,12 @@
     = link_to spot.name, spot_path(spot)
     = spot.current_wind_speed.to_s + " knots"
     = spot.current_wind_direction
-    = link_to "+ My Favourites", favourites_path(spot_id: spot.id), method: :post, class: 'btn btn-default' unless current_user.favourites.map(&:spot).include?(spot)
+    - if current_user
+      = link_to "+ My Favourites", favourites_path(spot_id: spot.id), method: :post, class: 'btn btn-default' unless current_user.favourites.map(&:spot).include?(spot)
+    - else
+      = link_to "+ My Favourites", favourites_path(spot_id: spot.id), method: :post, class: 'btn btn-default'
+
+
 
 %div(style='width: 800px;')
   %div(id="map" style='width: 800px; height: 400px;')

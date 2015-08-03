@@ -79,4 +79,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  ForecastIO.configure do |configuration|
+      configuration.api_key = '709a6c5b8ebe5c5467512ded06436d39'
+    end
 end
